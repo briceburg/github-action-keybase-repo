@@ -1,3 +1,4 @@
 FROM keybaseio/client:6.1.1-20230320121218-2c9816a743-alpine
 RUN apk add --no-cache git bash
 COPY entrypoint.sh /usr/bin/
+ENTRYPOINT [ "entrypoint.sh" ]
