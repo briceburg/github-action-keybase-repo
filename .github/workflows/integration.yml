@@ -1,0 +1,64 @@
+name: 'integration'
+
+on:
+  push:
+    branches:
+    - 'main'
+  pull_request:
+    branches:
+    - 'main'
+  workflow_dispatch:
+
+concurrency:
+  group: '${{ github.workflow }}-${{ github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  default:
+    if: ${{ github.event_name == 'push' || github.repository == github.event.pull_request.head.repo.full_name && github.actor != 'dependabot[bot]' }}
+    name: 'default'
+    permissions:
+      contents: 'read'
+    runs-on: 'ubuntu-latest'
+    steps:
+    - uses: 'actions/checkout@v3'
+
+    - id: 'self'
+      name: 'self execution'
+      uses: './'
+      with:
+        keybase_username: '${{ secrets.KEYBASE_USERNAME }}'
+        keybase_paperkey: '${{ secrets.KEYBASE_PAPERKEY }}'
+        repo: 'keybase://private/briceburg_test/github-action-test'
+
+    #
+    # testdata repository contents;
+    # .
+    # ├── README.md
+    # ├── bar.secret.tfvars
+    # ├── foo
+    # │   └── test.json
+    # ├── foo.secret.tfvars
+    # └── larry
+    #     └── curly
+    #         └── moe.json
+    #
+    # 3 directories, 5 files
+    #
+    - name: 'tests'
+      run: |
+        echo [test] repository cloned to target
+        (
+          test -d ${{ steps.self.outputs.target }}
+        )
+
+        echo [test] clone retains file hierarchy
+        (
+          cd ${{ steps.self.outputs.target }}
+          tree
+          test -e README.md
+          test -e larry/curly/moe.json
+          test -e foo/test.json
+        )
+
+        echo "[OK] TESTS PASS"

@@ -1,0 +1,24 @@
+name: 'Keybase Repository'
+branding:
+  icon: 'package'
+  color: 'red'
+description: 'Shallow clones a keybase git repository to a target directory.'
+inputs:
+  keybase_username:
+    description: 'Keybase Username'
+    required: true
+  keybase_paperkey:
+    description: 'Keybase Paper Key'
+    required: true
+  repo:
+    description: 'Repository name. e.g. keybase://team/acme/secrets_repo'
+    required: true
+  target:
+    description: 'Target directory (can be absolute or relative to workspace). If empty, will checkout to the github runner temporary directory which is emptied after the job completes.'
+    required: false
+outputs:
+  target:
+    description: 'Path to repository checkout.'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
