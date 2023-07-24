@@ -1,21 +1,17 @@
 #!/usr/bin/env bash
 #
-# copy-paths-from-repo:
-#   copies specified files and directories from a git repository to a target.
-#   supports glob expansion.
+# clone-repo:
+#   clones a keybase repository to target.
 #
 # enironment variables:
 #  INPUT_REPO  : required. git repository to copy from.
-#  INPUT_PATHS : required. colon seperated list of files or directories to copy.
-#                globs are supported, e.g. "foo:bar:*.secret:secrets/*"
-#  INPUT_TARGET: optional. target directory to copy to. empty for CWD.
+#  INPUT_TARGET: optional. target directory to copy to. empty for tmp.
 #
 set -eo pipefail
 log(){ echo -e "[action] $*" >&2; }
 die(){ log "$@"; exit 1; }
 
 [ -n "$INPUT_REPO" ] || die "empty INPUT_REPO"
-[ -n "$INPUT_PATHS" ] || die "empty INPUT_PATHS"
 
 target="${INPUT_TARGET:-$RUNNER_TEMP/$(basename "$INPUT_REPO")}"
 [ -e "$target" ] || mkdir -p "$target"
