@@ -14,7 +14,7 @@ inputs:
     description: 'Repository name. e.g. keybase://team/acme/secrets_repo'
     required: true
   target:
-    description: 'Target directory (can be absolute or relative to workspace). If empty, will checkout to the github runner temporary directory which is emptied after the job completes.'
+    description: 'Target directory relative to workspace. If not provided, will checkout to workspace root.'
     required: false
 outputs:
   target:

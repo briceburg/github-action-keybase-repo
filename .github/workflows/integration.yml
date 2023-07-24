@@ -22,7 +22,6 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
     - uses: 'actions/checkout@v3'
-
     - id: 'self'
       name: 'self execution'
       uses: './'
@@ -47,14 +46,13 @@ jobs:
     #
     - name: 'tests'
       run: |
-        echo [test] repository cloned to target
-        (
-          test -d ${{ steps.self.outputs.target }}
-        )
+        pwd
+        ls -la
+        echo "target: ${{ steps.self.outputs.target }}"
 
         echo [test] clone retains file hierarchy
         (
-          cd ${{ steps.self.outputs.target }}
+          cd "${{ steps.self.outputs.target }}"
           tree
           test -e README.md
           test -e larry/curly/moe.json

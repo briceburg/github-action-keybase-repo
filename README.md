@@ -28,7 +28,7 @@ name | :ballot_box_with_check: | description
 keybase_username | **required** | Keybase Username, e.g. `pat-acme`
 keybase_paperkey | **required** | Keybase Paper Key (for oneshot mode), e.g. `full moon sunday blurb`
 repo | **required** | Repository name.`keybase://team/acme/secrets_repo` or `https://github.com/acme/secrets_repo.git`
-target | _optional_ | Target directory (can be absolute or relative to workspace). If not provided, will checkout to the github runner temporary directory (`env.RUNNER_TEMP`) which empties after the job completes. :thought_balloon: It's recommended to copy into a [.gitignored](https://git-scm.com/docs/gitignore) target.
+target | _optional_ | Target directory (can be absolute or relative to workspace). If not provided, will checkout to workspace root. :thought_balloon: It's recommended to copy into a [.gitignored](https://git-scm.com/docs/gitignore) target.
 
 ### Outputs
 

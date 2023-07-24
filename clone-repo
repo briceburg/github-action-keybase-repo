@@ -13,10 +13,9 @@ die(){ log "$@"; exit 1; }
 
 [ -n "$INPUT_REPO" ] || die "empty INPUT_REPO"
 
-target="${INPUT_TARGET:-$RUNNER_TEMP/$(basename "$INPUT_REPO")}"
+target="${INPUT_TARGET:-$(basename "$INPUT_REPO")}"
 [ -e "$target" ] || mkdir -p "$target"
 [ -d "$target" ] || die "Target ($target) must be a directory"
-target="$(readlink -f "$target")" # ensure target is absolute
 
 git clone --depth 1 "$INPUT_REPO" "$target"
 echo "target=$target" >> "$GITHUB_OUTPUT"
