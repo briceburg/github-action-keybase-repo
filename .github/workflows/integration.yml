@@ -46,17 +46,19 @@ jobs:
     #
     - name: 'tests'
       run: |
-        pwd
-        ls -la
-        echo "target: ${{ steps.self.outputs.target }}"
-
-        echo [test] clone retains file hierarchy
+        echo "[test] clone retains file hierarchy"
         (
           cd "${{ steps.self.outputs.target }}"
           tree
           test -e README.md
           test -e larry/curly/moe.json
           test -e foo/test.json
+        )
+
+        echo "[test] checkout can be removed"
+        (
+          id
+          rm -rf "${{ steps.self.outputs.target }}"
         )
 
         echo "[OK] TESTS PASS"

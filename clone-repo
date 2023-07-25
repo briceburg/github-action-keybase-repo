@@ -18,5 +18,6 @@ target="${INPUT_TARGET:-$(basename "$INPUT_REPO")}"
 [ -d "$target" ] || die "Target ($target) must be a directory"
 
 git clone --depth 1 "$INPUT_REPO" "$target"
+chmod -R 777 "$target" # allow non-root user cleanup
 echo "target=$target" >> "$GITHUB_OUTPUT"
 
